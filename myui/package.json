@@ -1,0 +1,28 @@
+{
+    "name": "myui",
+    "version": "1.0.0",
+    "description": "Reusable UI library for Udroid",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "rollup -c",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build"
+    },
+    "keywords": [
+        "ui",
+        "react",
+        "library"
+    ],
+    "author": "Udroid",
+    "license": "ISC",
+    "peerDependencies": {
+        "react": "^18.0.0",
+        "react-dom": "^18.0.0"
+    },
+    "devDependencies": {
+        "rollup": "^4.0.0",
+        "typescript": "^5.0.0"
+    }
+}
