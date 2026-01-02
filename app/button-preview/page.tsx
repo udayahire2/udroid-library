@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Button } from '@/myui/src/components/Button';
-import { LikeButton } from '@/myui/src/components/Button/LikeButton';
-import { cn } from '@/myui/src/utils/cn';
+import { Button } from '@/udroid/src/components/Button';
+import { LikeButton } from '@/udroid/src/components/Button/LikeButton';
+import { cn } from '@/udroid/src/utils/cn';
 
 // Modern 2026 Trending Icons - Clean, Premium, Duotone Style
 const Sparkles = () => (
