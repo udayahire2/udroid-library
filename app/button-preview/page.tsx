@@ -150,10 +150,7 @@ export default function ButtonPreviewPage() {
                                 </div>
                             </div>
 
-                            <div className="space-y-4 bg-white dark:bg-gray-900 p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
-                                <h3 className="text-sm font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">Full Width</h3>
-                                <Button fullWidth variant="primary">Full Width Button</Button>
-                            </div>
+
                             <div className="space-y-4 bg-white dark:bg-gray-900 p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm col-span-1 md:col-span-2">
                                 <h3 className="text-sm font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">Interactive Like Button with Animation</h3>
                                 <div className="flex flex-wrap gap-8 items-center">

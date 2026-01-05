@@ -25,7 +25,7 @@ async function main() {
         program
             .command('add <component>')
             .description('Add a component to your project')
-            .option('-p, --path <path>', 'Destination path for components', './src/components/ui')
+            .option('-p, --path <path>', 'Destination path for components', './src/components/udroid')
             .action(async (componentName, options) => {
                 const spinner = ora(`Installing ${componentName}...`).start();
 
@@ -43,8 +43,28 @@ async function main() {
 
                     // 2. Resolve Paths
                     const targetBaseDir = path.resolve(CWD, options.path);
+                    const componentTargetDir = path.join(targetBaseDir, componentName); // e.g. src/components/udroid/button
 
-                    // Ensure Utils exist if needed
+                    // 3. Pre-flight Check: Ensure no files will be overwritten
+                    // For the component itself
+                    for (const file of component.files) {
+                        const fileName = path.basename(file.path);
+                        const targetPath = path.join(componentTargetDir, fileName);
+                        // Skip check if source and target are the same (testing locally) - though this is rare in real usage
+                        const sourcePath = path.join(PROJECT_ROOT, file.path);
+                        if (sourcePath === targetPath) continue;
+
+                        if (await fs.pathExists(targetPath)) {
+                            spinner.fail(chalk.red(`Error: Component file already exists: ${targetPath}`));
+                            console.log(chalk.yellow('To overwrite, manually delete the existing file/folder first.'));
+                            return;
+                        }
+                    }
+
+                    // For registry dependencies (utils) - we typically don't fail hard on utils, but checking uses logic
+                    // If util exists, we usually skip or overwrite. shadcn skips. Let's keep existing logic for utils or strictly better: skip if exists
+
+                    // 4. Copy Utils (Registry Dependencies)
                     if (component.registryDependencies) {
                         for (const depName of component.registryDependencies) {
                             const dep = registry.items.find(d => d.name === depName);
@@ -55,26 +75,30 @@ async function main() {
 
                                     // Determine target relative path. e.g. src/utils/cn.ts -> utils/cn.ts
                                     // We assume standard Next.js src directory structure for the target
+                                    // For utils, we stick to src/utils convention often, or map properly.
+                                    // Assuming src/utils for now as per previous logic.
                                     const relPath = file.path.replace('src/', '');
                                     const targetPath = path.join(CWD, 'src', relPath);
 
-                                    await fs.ensureDir(path.dirname(targetPath));
-
-                                    // Skip if source and target are the same (testing locally)
+                                    // Skip if source and target are the same
                                     if (sourcePath === targetPath) continue;
 
-                                    if (await fs.pathExists(sourcePath)) {
-                                        await fs.copy(sourcePath, targetPath);
+                                    if (await fs.pathExists(targetPath)) {
+                                        // Silent skip or warn. Usually better to skip utils if they exist to preserve user changes.
+                                        // spinner.info(`Skipping existing util: ${path.basename(targetPath)}`);
                                     } else {
-                                        spinner.warn(`Warning: Source util file not found at ${sourcePath}`);
+                                        await fs.ensureDir(path.dirname(targetPath));
+                                        if (await fs.pathExists(sourcePath)) {
+                                            await fs.copy(sourcePath, targetPath);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
 
-                    // 3. Copy Component Files
-                    const componentTargetDir = path.join(targetBaseDir, componentName); // e.g. src/components/ui/button
+
+                    // 5. Copy Component Files (Now safe to copy)
                     await fs.ensureDir(componentTargetDir);
 
                     for (const file of component.files) {
@@ -82,7 +106,6 @@ async function main() {
                         const fileName = path.basename(file.path);
                         const targetPath = path.join(componentTargetDir, fileName);
 
-                        // Skip if source and target are the same (testing locally)
                         if (sourcePath === targetPath) continue;
 
                         if (await fs.pathExists(sourcePath)) {

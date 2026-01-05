@@ -1,13 +1,20 @@
 {
     "name": "udroid",
-    "version": "1.0.0",
+    "version": "0.0.1",
+    "private": false,
     "description": "Reusable UI library for Udroid",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
     "bin": {
-        "udroid": "./scripts/cli.js"
+        "udroid": "scripts/cli.js"
     },
+    "files": [
+        "dist",
+        "src",
+        "scripts",
+        "registry.json"
+    ],
     "scripts": {
         "build": "rollup -c",
         "storybook": "storybook dev -p 6006",

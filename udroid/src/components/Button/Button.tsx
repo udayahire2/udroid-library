@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react';
-import { motion, HTMLMotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Spinner } from './Spinner';
 import { cn } from '../../utils/cn';
 import { variantStyles, sizeStyles, iconSizes, ButtonVariant, ButtonSize } from './Button.styles';
@@ -10,16 +10,18 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   isLoading?: boolean;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-  fullWidth?: boolean;
-  asChild?: boolean;
+  asChild?: boolean; // Reserved for future Slot implementation
 }
 
-// Combine standard button props with specific motion props we want to expose if any,
-// but usually wrapping HTMLButtonElement attributes is enough for TS unless we expoose motion props directly.
-// To allow motion props (like whileHover), we can intersection with HTMLMotionProps<"button">.
-// However, to keep it simple and safe, we can just use the motion.button internally and allow passed props
-// to flow through if they match.
-// For now, let's treat it as a standard button with internal motion behavior.
+// Helper to inject classes into icons (Heroicons support)
+const injectIconStyles = (icon: ReactNode, className: string) => {
+  if (React.isValidElement(icon)) {
+    return React.cloneElement(icon as React.ReactElement<any>, {
+      className: cn(className, (icon.props as any).className),
+    });
+  }
+  return icon;
+};
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -31,61 +33,116 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading = false,
       leftIcon,
       rightIcon,
-      fullWidth = false,
       disabled,
       type = 'button',
+      onClick,
       ...props
     },
     ref
   ) => {
+    const isDisabled = disabled || isLoading;
+    const iconSizeClass = iconSizes[size];
+
+    // State for liquid click effect
+    const [ripple, setRipple] = React.useState<{ x: number; y: number; key: number; active: boolean }>({
+      x: 0,
+      y: 0,
+      key: 0,
+      active: false,
+    });
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Trigger new ripple with unique key
+      setRipple({ x, y, key: Date.now(), active: true });
+
+      // Call original onClick
+      if (onClick) {
+        onClick(e);
+      }
+
+      // Auto-remove ripple from DOM after animation
+      setTimeout(() => {
+        setRipple((prev) => ({ ...prev, active: false }));
+      }, 800);
+    };
+
     return (
       <motion.button
         ref={ref}
         type={type}
-        disabled={disabled || isLoading}
-        aria-disabled={disabled || isLoading}
+        disabled={isDisabled}
+        onClick={isDisabled ? undefined : handleClick}
+        aria-disabled={isDisabled}
         aria-busy={isLoading}
-        whileTap={{ scale: 0.97 }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+        whileTap={{ scale: 0.99 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20, mass: 0.8 }} // Smoother, less snappy spring
         className={cn(
-          // Base Layout & Shared Styles
-          'relative inline-flex items-center justify-center whitespace-nowrap transition-colors duration-200 select-none overflow-hidden',
+          // Base Layout
+          'relative inline-flex items-center justify-center whitespace-nowrap select-none overflow-hidden',
+          // Transitions
+          'transition-transform duration-200 active:scale-95',
           // Focus Accessibility
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2 dark:focus-visible:ring-blue-400/50 dark:focus-visible:ring-offset-slate-900',
           // Disabled State
-          'disabled:pointer-events-none disabled:opacity-60 disabled:grayscale-[0.1]',
-          // Variants & Sizes
+          'disabled:pointer-events-none disabled:opacity-50 disabled:grayscale',
+          // Custom Styles
           variantStyles[variant],
           sizeStyles[size],
-          // Full Width
-          fullWidth && 'w-full',
           className
         )}
-        {...props as any} // Cast comfortably to motions props compatible
+        {...props as any}
       >
-        {/* Loading Spinner Overlay */}
-        {isLoading && (
+        {/* Imploding Ripple/Ticker Click Overlay */}
+        {!isDisabled && ripple.active && (
           <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-current"
-          >
-            <Spinner size={iconSizes[size]} />
-          </motion.span>
+            key={ripple.key}
+            className="absolute rounded-full bg-white/30 dark:bg-white/10 pointer-events-none"
+            initial={{ scale: 150, opacity: 0.5 }} // Start HUGE
+            animate={{
+              scale: 0,        // Shrink to nothing
+              opacity: 0,      // Fade out
+            }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} // Smooth implosion
+            style={{
+              left: ripple.x,
+              top: ripple.y,
+              width: 10,
+              height: 10,
+              x: '-50%',
+              y: '-50%',
+            }}
+          />
         )}
 
-        {/* Content */}
+        {/* Loading Overlay */}
+        {isLoading && (
+          <span className="absolute inset-0 flex items-center justify-center z-20">
+            <Spinner className={iconSizeClass} />
+          </span>
+        )}
+
+        {/* Content (z-index to stay on top of liquid) */}
         <span
           className={cn(
-            'flex items-center justify-center gap-[inherit]',
+            'flex items-center justify-center gap-[inherit] relative z-10',
             isLoading && 'opacity-0 invisible'
           )}
         >
-          {leftIcon && <span className="inline-flex items-center flex-shrink-0">{leftIcon}</span>}
+          {leftIcon && (
+            <span className="inline-flex items-center flex-shrink-0">
+              {injectIconStyles(leftIcon, iconSizeClass)}
+            </span>
+          )}
           {children}
-          {rightIcon && <span className="inline-flex items-center flex-shrink-0">{rightIcon}</span>}
+          {rightIcon && (
+            <span className="inline-flex items-center flex-shrink-0">
+              {injectIconStyles(rightIcon, iconSizeClass)}
+            </span>
+          )}
         </span>
       </motion.button>
     );

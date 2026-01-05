@@ -1,7 +1,7 @@
 {
     "$schema": "https://ui.shadcn.com/schema/registry.json",
     "name": "udroid",
-    "homepage": "https://udroid.dev",
+    "homepage": "https://udroid-ui.vercel.app/",
     "version": "1.0.0",
     "items": [
         {

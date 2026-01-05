@@ -5,7 +5,7 @@ The `Button` folder contains a comprehensive set of button components designed f
 ## Directory Structure
 
 ```text
-myui/src/components/Button/
+udroid-ui/src/components/Button/
 ├── Button.tsx          # Main Button component implementation
 ├── Button.styles.ts    # centralized styles (if applicable)
 ├── Button.types.ts     # Type definitions
@@ -18,9 +18,9 @@ myui/src/components/Button/
 ## Installation
 
 ```tsx
-import { Button, LikeButton } from '@/myui/src/components/Button';
+import { Button, LikeButton } from '@/udroid-ui/src/components/Button';
 ```
-    
+
 ---
 
 ## Button
@@ -80,14 +80,14 @@ Supports left/right icons and a loading state that preserves button width.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `ButtonVariant` | `'primary'` | Visual style of the button. |
-| `size` | `ButtonSize` | `'md'` | Size of the button. |
-| `isLoading` | `boolean` | `false` | Shows a loading spinner and disables interaction. |
-| `isDisabled` | `boolean` | `false` | Disables the button. |
-| `leftIcon` | `ReactNode` | - | Icon to display before the label. |
-| `rightIcon` | `ReactNode` | - | Icon to display after the label. |
-| `fullWidth` | `boolean` | `false` | If `true`, button takes up 100% width. |
-| `children` | `ReactNode` | - | Button content. |
+| `variant`    | `ButtonVariant` | `'primary'` | Visual style of the button.                       |
+| `size`       | `ButtonSize`    | `'md'`      | Size of the button.                               |
+| `isLoading`  | `boolean`       | `false`     | Shows a loading spinner and disables interaction. |
+| `isDisabled` | `boolean`       | `false`     | Disables the button.                              |
+| `leftIcon`   | `ReactNode`     | -           | Icon to display before the label.                 |
+| `rightIcon`  | `ReactNode`     | -           | Icon to display after the label.                  |
+| `className`  | `string`        | -           | Additional CSS classes (e.g., `w-full`).          |
+| `children`   | `ReactNode`     | -           | Button content.                                   |
 
 ---
 
@@ -98,7 +98,7 @@ An interactive, animated button specifically designed for "like" or "favorite" a
 ### Usage
 
 ```tsx
-import { LikeButton } from '@/myui/src/components/Button';
+import { LikeButton } from '@/udroid-ui/src/components/Button';
 
 // Basic usage
 <LikeButton />
@@ -135,7 +135,7 @@ import { LikeButton } from '@/myui/src/components/Button';
 A utility component mainly used internally by `Button` for the `isLoading` state, but exported for general use if needed.
 
 ```tsx
-import { Spinner } from '@/myui/src/components/Button';
+import { Spinner } from '@/udroid-ui/src/components/Button';
 
 <Spinner size={20} />
 ```
