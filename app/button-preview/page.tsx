@@ -1,196 +1,219 @@
 "use client";
 
-import React, { useState } from "react";
-import { Button } from "@/udroid/src/components/Button";
-import { cn } from "@/udroid/src/utils/cn";
-
-// Modern 2026 Trending Icons - Clean, Premium, Duotone Style
+import { Button } from "../../udroid/src";
+import React from "react";
 import {
-  Sparkles,
-  Send,
-  Heart,
-  Trash,
+  Bell,
+  Settings,
+  Trash2,
+  MoreHorizontal,
+  Plus,
+  Search,
+  X,
+  Bold,
+  Italic,
+  Underline,
+  Share2,
   Download,
-  Check,
   Mail,
-  Moon,
+  Loader2,
+  ArrowRight,
   Sun,
+  Moon
 } from "lucide-react";
 
 export default function ButtonPreviewPage() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
+  const toggleTheme = () => {
+    const newIsDark = !isDark;
+    setIsDark(newIsDark);
+    if (newIsDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
 
   return (
-    <div
-      className={cn(
-        "min-h-screen transition-colors duration-300",
-        isDark ? "dark" : ""
-      )}
-    >
-      <div className="min-h-screen p-12 space-y-12 transition-colors duration-300">
-        <div className="max-w-5xl mx-auto">
-          <header className="mb-12 flex justify-between items-start">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                Button Component
-              </h1>
-              <p className="text-gray-500 dark:text-gray-400 text-lg">
-                Premium design system with modern icons (Medium size default)
-              </p>
-            </div>
-            <button
-              onClick={() => setIsDark(!isDark)}
-              className="p-3 rounded-full bg-white dark:bg-neutral-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-all cursor-pointer"
-              title="Toggle Dark Mode"
-            >
-              {isDark ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
-          </header>
-
-          {/* Variants */}
-          <section className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-              Variants (All Medium Size)
-            </h2>
-            <div className="flex flex-wrap items-center gap-4 bg-white dark:bg-neutral-900/50 p-8 rounded-2xl border border-gray-100 dark:border-neutral-800 shadow-sm">
-              <Button variant="primary">Primary</Button>
-              <Button variant="secondary">Secondary</Button>
-              <Button variant="outline">Outline</Button>
-              <Button variant="ghost">Ghost</Button>
-              <Button variant="destructive">Destructive</Button>
-              <Button variant="success">Success</Button>
-            </div>
-          </section>
-
-          {/* Sizes */}
-          <section className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-              Sizes
-            </h2>
-            <div className="flex flex-wrap items-center gap-4 bg-white dark:bg-neutral-900/50 p-8 rounded-2xl border border-gray-100 dark:border-neutral-800 shadow-sm">
-              <Button size="sm">Small (32px)</Button>
-              <Button size="md">Medium (40px) - Default</Button>
-              <Button size="lg">Large (48px)</Button>
-            </div>
-          </section>
-
-          {/* States & Behaviors */}
-          <section className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-              States & Features
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4 bg-white dark:bg-neutral-900/50 p-8 rounded-2xl border border-gray-100 dark:border-neutral-800 shadow-sm">
-                <h3 className="text-sm font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                  Loading
-                </h3>
-                <div className="flex gap-4 flex-wrap">
-                  <Button isLoading>Processing</Button>
-                  <Button variant="secondary" isLoading>
-                    Saving
-                  </Button>
-                  <Button variant="outline" isLoading>
-                    Loading
-                  </Button>
-                </div>
-              </div>
-
-              <div className="space-y-4 bg-white dark:bg-neutral-900/50 p-8 rounded-2xl border border-gray-100 dark:border-neutral-800 shadow-sm">
-                <h3 className="text-sm font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                  Disabled
-                </h3>
-                <div className="flex gap-4">
-                  <Button disabled>Disabled</Button>
-                  <Button variant="outline" disabled>
-                    Not Allowed
-                  </Button>
-                </div>
-              </div>
-
-              <div className="space-y-4 bg-white dark:bg-neutral-900/50 p-8 rounded-2xl border border-gray-100 dark:border-neutral-800 shadow-sm col-span-1 md:col-span-2">
-                <h3 className="text-sm font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                  With Modern Icons (2026 Trending Style)
-                </h3>
-                <div className="flex flex-wrap gap-4">
-                  <Button
-                    leftIcon={<Mail className="w-5 h-5" />}
-                    variant="primary"
-                  >
-                    Email Login
-                  </Button>
-                  <Button
-                    rightIcon={<Send className="w-5 h-5" />}
-                    variant="secondary"
-                  >
-                    Get Started
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    leftIcon={<Trash className="w-5 h-5" />}
-                  >
-                    Delete
-                  </Button>
-                  <Button
-                    variant="success"
-                    leftIcon={<Check className="w-5 h-5" />}
-                  >
-                    Approve
-                  </Button>
-                  <Button
-                    variant="outline"
-                    rightIcon={<Download className="w-5 h-5" />}
-                  >
-                    Download
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    leftIcon={<Heart className="w-5 h-5" />}
-                  >
-                    Like
-                  </Button>
-                  <Button leftIcon={<Sparkles className="w-5 h-5" />}>
-                    Create New
-                  </Button>
-                </div>
-              </div>
-
-              <div className="space-y-4 bg-white dark:bg-neutral-900/50 p-8 rounded-2xl border border-gray-100 dark:border-neutral-800 shadow-sm col-span-1 md:col-span-2">
-                <h3 className="text-sm font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                  Monochrome Variants
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="solid" tone="neutral">
-                    Solid Dark
-                  </Button>
-
-                  <Button variant="solid" tone="inverse">
-                    Solid Light
-                  </Button>
-
-                  <Button
-                    variant="solid"
-                    tone="neutral"
-                    leftIcon={<Moon className="h-4 w-4" />}
-                  >
-                    Night Mode
-                  </Button>
-
-                  <Button
-                    variant="solid"
-                    tone="inverse"
-                    leftIcon={<Sun className="h-4 w-4" />}
-                  >
-                    Day Mode
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </section>
+    <div className="flex min-h-screen flex-col items-center py-12 px-4 gap-12 bg-background text-foreground selection:bg-primary/20 transition-colors duration-300">
+      <div className="text-center space-y-4 relative w-full max-w-5xl">
+        <div className="absolute right-0 top-0">
+          <button
+            onClick={toggleTheme}
+            className="rounded-full border border-border bg-card p-2.5 text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+          >
+            {isDark ? <Sun className="size-5" /> : <Moon className="size-5" />}
+          </button>
         </div>
+        <h1 className="text-4xl font-bold tracking-tight">Udroid Button System</h1>
+        <p className="text-muted-foreground max-w-lg mx-auto">
+          From "Digital Keycaps" to System Icons. Precision physics, semantic lighting, and strict sizing.
+        </p>
+      </div>
+
+      <div className="grid gap-20 w-full max-w-5xl">
+
+        {/* --- PART 1: IDENTITY & TEXT BUTTONS --- */}
+
+        {/* IDENTITY TEST */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3 pb-2 border-b border-border">
+            <div className="h-6 w-1 bg-primary rounded-full" />
+            <h2 className="text-xl font-semibold">1. The Digital Keycap (Identity)</h2>
+            <span className="text-xs text-muted-foreground ml-auto font-mono">cubic-bezier(0.4, 0, 0.2, 1)</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="p-12 border rounded-xl bg-card/30 flex items-center justify-center">
+              <Button size="lg" className="w-48 h-14 text-base shadow-xl">
+                Commit Action
+              </Button>
+            </div>
+            <div className="space-y-4 text-sm text-muted-foreground">
+              <p><strong className="text-foreground">Rest:</strong> Subtle "Lip" highlight + Elevation.</p>
+              <p><strong className="text-foreground">Hover:</strong> Light intensifies, shadow grows.</p>
+              <p><strong className="text-foreground">Active:</strong> Mechanical depression (1px), light blocked (lip dims), shadow collapses.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* VARIANT HIERARCHY */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3 pb-2 border-b border-border">
+            <div className="h-6 w-1 bg-primary rounded-full" />
+            <h2 className="text-xl font-semibold">2. Text Variants</h2>
+          </div>
+          <div className="flex flex-wrap gap-4 p-8 border rounded-xl bg-card/30 justify-center">
+            <Button>Primary</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="destructive">Destructive</Button>
+            <Button variant="link">Link</Button>
+          </div>
+        </section>
+
+        {/* COMPOSITION */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3 pb-2 border-b border-border">
+            <div className="h-6 w-1 bg-primary rounded-full" />
+            <h2 className="text-xl font-semibold">3. Composition & Loading</h2>
+          </div>
+          <div className="flex flex-wrap gap-4 p-8 border rounded-xl bg-card/30 justify-center">
+            <Button>
+              <Mail className="mr-2" /> Login
+            </Button>
+            <Button variant="secondary">
+              Next Step <ArrowRight className="ml-2" />
+            </Button>
+            <Button disabled>
+              <Loader2 className="mr-2 animate-spin" />
+              Processing
+            </Button>
+          </div>
+        </section>
+
+        {/* SIZES (TEXT) */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3 pb-2 border-b border-border">
+            <div className="h-6 w-1 bg-primary rounded-full" />
+            <h2 className="text-xl font-semibold">4. Text Sizes (Variable Travel)</h2>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-8 p-8 border rounded-xl bg-card/30">
+            <div className="flex flex-col items-center gap-2">
+              <Button size="sm">Small (0.5px)</Button>
+              <span className="text-xs text-muted-foreground">Low Travel</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Button>Default (0.75px)</Button>
+              <span className="text-xs text-muted-foreground">Standard</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Button size="lg">Large (1px)</Button>
+              <span className="text-xs text-muted-foreground">Deep Travel</span>
+            </div>
+          </div>
+        </section>
+
+        {/* --- PART 2: SYSTEM ICONS --- */}
+
+        {/* ICON SIZES */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3 pb-2 border-b border-border">
+            <div className="h-6 w-1 bg-primary rounded-full" />
+            <h2 className="text-xl font-semibold">5. Icon System (Square Physics)</h2>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-12 p-12 border rounded-xl bg-card/30">
+            <div className="flex flex-col items-center gap-4">
+              <Button size="icon-sm" variant="secondary" aria-label="Small">
+                <Settings />
+              </Button>
+              <code className="text-xs text-muted-foreground">icon-sm (32px)</code>
+            </div>
+            <div className="flex flex-col items-center gap-4">
+              <Button size="icon-md" variant="secondary" aria-label="Medium">
+                <Bell />
+              </Button>
+              <code className="text-xs text-muted-foreground">icon-md (36px)</code>
+            </div>
+            <div className="flex flex-col items-center gap-4">
+              <Button size="icon-lg" variant="secondary" aria-label="Large">
+                <Plus />
+              </Button>
+              <code className="text-xs text-muted-foreground">icon-lg (40px)</code>
+            </div>
+          </div>
+        </section>
+
+        {/* REAL WORLD CONTEXTS */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3 pb-2 border-b border-border">
+            <div className="h-6 w-1 bg-primary rounded-full" />
+            <h2 className="text-xl font-semibold">6. Real Contexts</h2>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {/* Toolbar */}
+            <div className="border rounded-xl bg-card p-6 space-y-4">
+              <h3 className="text-sm font-medium text-muted-foreground">Dense Toolbar</h3>
+              <div className="flex items-center gap-1 p-1 border rounded-lg bg-background w-fit">
+                <Button size="icon-sm" variant="ghost"> <Bold /> </Button>
+                <Button size="icon-sm" variant="ghost"> <Italic /> </Button>
+                <Button size="icon-sm" variant="ghost"> <Underline /> </Button>
+                <div className="w-px h-4 bg-border mx-1" />
+                <Button size="icon-sm" variant="ghost"> <Share2 /> </Button>
+              </div>
+            </div>
+
+            {/* App Header */}
+            <div className="border rounded-xl bg-card p-6 space-y-4">
+              <h3 className="text-sm font-medium text-muted-foreground">App Header</h3>
+              <div className="flex items-center justify-between p-4 border rounded-lg bg-background shadow-sm">
+                <span className="font-semibold px-2">Dashboard</span>
+                <div className="flex items-center gap-2">
+                  <Button size="icon-md" variant="ghost"> <Search /> </Button>
+                  <Button size="icon-md" variant="ghost"> <Bell /> </Button>
+                  <div className="size-8 rounded-full bg-muted border ml-2" />
+                </div>
+              </div>
+            </div>
+
+            {/* Destructive */}
+            <div className="border rounded-xl bg-card p-6 space-y-4">
+              <h3 className="text-sm font-medium text-muted-foreground">Destructive / Close</h3>
+              <div className="flex gap-4">
+                <Button size="icon-md" variant="destructive"> <Trash2 /> </Button>
+                <Button size="icon-md" variant="outline"> <X /> </Button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
       </div>
     </div>
   );

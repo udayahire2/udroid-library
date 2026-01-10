@@ -1,98 +1,37 @@
-import { cva } from "class-variance-authority";
+import { cva } from "../../utils/variants";
 
 export const buttonVariants = cva(
-  [
-    "inline-flex items-center justify-center gap-2",
-    "rounded-lg font-medium",
-    "transition-colors duration-200 ease-out",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-    "disabled:pointer-events-none disabled:opacity-50",
-    "select-none",
-  ],
-  {
-    variants: {
-      variant: {
-        primary: [
-          "bg-blue-600 text-white",
-          "hover:bg-blue-700",
-          "active:bg-blue-800",
-          "focus-visible:ring-blue-500",
-          "dark:bg-blue-500 dark:hover:bg-blue-600",
-        ],
+    // Base: Strictly controlled transitions, mechanical easing, no bounce.
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[transform,box-shadow,background-color,color] duration-200 ease-mechanical focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:transform-none select-none",
+    {
+        variants: {
+            variant: {
+                default:
+                    "bg-primary text-primary-foreground shadow-[var(--shadow-button-rest),var(--shadow-button-lip)] hover:bg-primary/90 hover:shadow-md active:shadow-[0_0_0_0_transparent,var(--shadow-button-lip)] active:translate-y-[0.75px]",
+                destructive:
+                    "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 hover:shadow-md active:shadow-none active:translate-y-[0.75px]",
+                outline:
+                    "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground hover:shadow-md active:shadow-none active:translate-y-[0.75px]",
+                secondary:
+                    "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 hover:shadow-md active:shadow-none active:translate-y-[0.75px]",
+                ghost: "hover:bg-accent hover:text-accent-foreground active:bg-accent/80",
+                link: "text-primary underline-offset-4 hover:underline",
+            },
+            size: {
+                default: "h-9 px-4 py-2",
+                sm: "h-8 rounded-md px-3 text-xs active:translate-y-[0.5px]", // Less travel for small
+                lg: "h-10 rounded-md px-8 active:translate-y-[1px]",      // More travel for large
 
-        secondary: [
-          "bg-slate-100 text-slate-900 border border-slate-200",
-          "hover:bg-slate-200",
-          "active:bg-slate-300",
-          "focus-visible:ring-slate-400",
-          "dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700",
-          "dark:hover:bg-slate-700",
-        ],
-
-        outline: [
-          "bg-transparent border border-slate-300 text-slate-700",
-          "hover:bg-slate-50",
-          "active:bg-slate-100",
-          "focus-visible:ring-slate-400",
-          "dark:border-slate-600 dark:text-slate-200",
-          "dark:hover:bg-slate-800/50",
-        ],
-
-        ghost: [
-          "bg-transparent text-slate-700",
-          "hover:bg-slate-100",
-          "active:bg-slate-200",
-          "focus-visible:ring-slate-400",
-          "dark:text-slate-300 dark:hover:bg-slate-800",
-        ],
-
-        destructive: [
-          "bg-red-600 text-white",
-          "hover:bg-red-700",
-          "active:bg-red-800",
-          "focus-visible:ring-red-500",
-          "dark:bg-red-500 dark:hover:bg-red-600",
-        ],
-
-        success: [
-          "bg-green-600 text-white",
-          "hover:bg-green-700",
-          "active:bg-green-800",
-          "focus-visible:ring-green-500",
-          "dark:bg-green-500 dark:hover:bg-green-600",
-        ],
-
-        solid:
-          "bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900",
-      },
-
-      size: {
-        sm: "h-8 px-3 text-sm",
-        md: "h-10 px-4 text-base",
-        lg: "h-12 px-6 text-lg",
-      },
-
-      tone: {
-        neutral: "",
-        inverse: "",
-      },
-    },
-
-    compoundVariants: [
-      {
-        variant: "solid",
-        tone: "inverse",
-        className: [
-          "bg-white text-slate-900 border border-slate-200",
-          "hover:bg-slate-50",
-          "dark:bg-slate-900 dark:text-white dark:border-slate-700",
-        ],
-      },
-    ],
-
-    defaultVariants: {
-      variant: "primary",
-      size: "md",
-    },
-  }
+                // System-Level Icon Sizes (Square Geometry Tuning)
+                // Physics Override: Less scale (0.985 vs 0.98) and less travel (0.5px max) to prevent "wobbly" feel
+                "icon-sm": "h-8 w-8 p-0 [&_svg]:size-4 active:scale-[0.985] active:translate-y-[0.5px]",
+                "icon-md": "h-9 w-9 p-0 [&_svg]:size-4 active:scale-[0.985] active:translate-y-[0.5px]",
+                "icon-lg": "h-10 w-10 p-0 [&_svg]:size-5 active:scale-[0.985] active:translate-y-[0.5px]",
+            },
+        },
+        defaultVariants: {
+            variant: "default",
+            size: "default",
+        },
+    }
 );
