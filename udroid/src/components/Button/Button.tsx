@@ -1,140 +1,69 @@
-import React, { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react';
-import { motion } from 'framer-motion';
-import { Spinner } from './Spinner';
-import { cn } from '../../utils/cn';
-import { buttonVariants, iconSizes, ButtonVariant, ButtonSize } from './Button.styles';
+'use client';
 
-export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'onDrag' | 'onDragStart' | 'onDragEnd' | 'style'> {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  isLoading?: boolean;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
-  asChild?: boolean; // Reserved for future Slot implementation
-}
-
-// Helper to inject classes into icons (Heroicons support)
-const injectIconStyles = (icon: ReactNode, className: string) => {
-  if (React.isValidElement(icon)) {
-    return React.cloneElement(icon as React.ReactElement<any>, {
-      className: cn(className, (icon.props as any).className),
-    });
-  }
-  return icon;
-};
+import * as React from 'react';
+import { forwardRef } from 'react';
+import { Loader2 } from 'lucide-react';
+import { cn } from '@/udroid/src/utils/cn';
+import { buttonVariants } from './Button.styles';
+import type { ButtonProps } from './Button.types';
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      children,
-      className,
       variant = 'primary',
       size = 'md',
+      tone,
       isLoading = false,
       leftIcon,
       rightIcon,
+      className,
+      children,
       disabled,
-      type = 'button',
-      onClick,
       ...props
     },
     ref
   ) => {
     const isDisabled = disabled || isLoading;
-    const iconSizeClass = iconSizes[size];
-
-    // State for liquid click effect
-    const [ripple, setRipple] = React.useState<{ x: number; y: number; key: number; active: boolean }>({
-      x: 0,
-      y: 0,
-      key: 0,
-      active: false,
-    });
-
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      // Trigger new ripple with unique key
-      setRipple({ x, y, key: Date.now(), active: true });
-
-      // Call original onClick
-      if (onClick) {
-        onClick(e);
-      }
-
-      // Auto-remove ripple from DOM after animation
-      setTimeout(() => {
-        setRipple((prev) => ({ ...prev, active: false }));
-      }, 800);
-    };
 
     return (
-      <motion.button
+      <button
         ref={ref}
-        type={type}
-        disabled={isDisabled}
-        onClick={isDisabled ? undefined : handleClick}
-        aria-disabled={isDisabled}
-        aria-busy={isLoading}
-        whileTap={{ scale: 0.99 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20, mass: 0.8 }} // Smoother, less snappy spring
-        className={cn(buttonVariants({ variant, size, className }))}
-        {...props as any}
-      >
-        {/* Imploding Ripple/Ticker Click Overlay */}
-        {!isDisabled && ripple.active && (
-          <motion.span
-            key={ripple.key}
-            className="absolute rounded-full bg-white/30 dark:bg-white/10 pointer-events-none"
-            initial={{ scale: 150, opacity: 0.5 }} // Start HUGE
-            animate={{
-              scale: 0,        // Shrink to nothing
-              opacity: 0,      // Fade out
-            }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} // Smooth implosion
-            style={{
-              left: ripple.x,
-              top: ripple.y,
-              width: 10,
-              height: 10,
-              x: '-50%',
-              y: '-50%',
-            }}
-          />
+        className={cn(
+          buttonVariants({ variant, size, tone }),
+          'relative inline-flex items-center justify-center',
+          className
         )}
-
-        {/* Loading Overlay */}
+        disabled={isDisabled}
+        aria-busy={isLoading}
+        {...props}
+      >
+        {/* Loading overlay */}
         {isLoading && (
-          <span className="absolute inset-0 flex items-center justify-center z-20">
-            <Spinner className={iconSizeClass} />
+          <span
+            className="absolute inset-0 flex items-center justify-center"
+            aria-hidden
+          >
+            <Loader2
+              className="animate-spin"
+              size={size === 'sm' ? 14 : size === 'lg' ? 18 : 16}
+            />
           </span>
         )}
 
-        {/* Content (z-index to stay on top of liquid) */}
+        {/* Content */}
         <span
           className={cn(
-            'flex items-center justify-center gap-[inherit] relative z-10',
-            isLoading && 'opacity-0 invisible'
+            'inline-flex items-center gap-2',
+            isLoading && 'opacity-0'
           )}
         >
-          {leftIcon && (
-            <span className="inline-flex items-center flex-shrink-0">
-              {injectIconStyles(leftIcon, iconSizeClass)}
-            </span>
-          )}
+          {leftIcon && <span className="shrink-0">{leftIcon}</span>}
           {children}
-          {rightIcon && (
-            <span className="inline-flex items-center flex-shrink-0">
-              {injectIconStyles(rightIcon, iconSizeClass)}
-            </span>
-          )}
+          {rightIcon && <span className="shrink-0">{rightIcon}</span>}
         </span>
-      </motion.button>
+      </button>
     );
   }
 );
 
 Button.displayName = 'Button';
-
