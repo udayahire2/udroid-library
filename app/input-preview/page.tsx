@@ -90,61 +90,7 @@ export default function InputPreviewPage() {
                 </section>
 
                 {/* CHATBOT INTERFACES */}
-                <section className="space-y-6">
-                    <div className="flex items-center gap-3 pb-2 border-b border-border">
-                        <div className="h-6 w-1 bg-primary rounded-full" />
-                        <h2 className="text-xl font-semibold">3. The Smart Deck (Textarea)</h2>
-                        <span className="ml-auto text-xs text-muted-foreground font-mono">autoGrow + items-end</span>
-                    </div>
-                    <div className="grid gap-8">
-
-                        {/* ChatGPT Style */}
-                        <div className="p-8 border rounded-xl bg-card/30 space-y-4">
-                            <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                                <Sparkles className="size-4 text-purple-500" /> "The Assistant" (Rounded 2xl)
-                            </h3>
-                            <div className="max-w-2xl mx-auto">
-                                <Textarea
-                                    autoGrow
-                                    placeholder="Message Udroid..."
-                                    className="rounded-2xl"
-                                    startContent={
-                                        <div className="p-1 rounded-full hover:bg-muted cursor-pointer transition-colors">
-                                            <Paperclip className="size-4" />
-                                        </div>
-                                    }
-                                    endContent={
-                                        <Button size="icon-sm" className="rounded-full h-8 w-8">
-                                            <Send className="size-4" />
-                                        </Button>
-                                    }
-                                />
-                            </div>
-                        </div>
-
-                        {/* Minimal / Coder style */}
-                        <div className="p-8 border rounded-xl bg-card/30 space-y-4">
-                            <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                                <Mic className="size-4 text-emerald-500" /> "The Note Taker" (Default)
-                            </h3>
-                            <div className="max-w-2xl mx-auto">
-                                <Textarea
-                                    autoGrow
-                                    variant="filled"
-                                    placeholder="Take a note..."
-                                    rows={1}
-                                    endContent={
-                                        <div className="flex items-center gap-1">
-                                            <Button size="icon-sm" variant="ghost"> <Mic /> </Button>
-                                            <Button size="icon-sm" variant="ghost"> <Send /> </Button>
-                                        </div>
-                                    }
-                                />
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
+               
 
             </div>
         </div>

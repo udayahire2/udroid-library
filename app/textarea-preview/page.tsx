@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
-import { Textarea, Button } from "@/udroid/src";
-import { AlertCircle, FileText, MessageSquare, PenLine, Sun, Moon } from "lucide-react";
+import * as React from "react";
+import { Moon, Sun, Mail, MessageSquare, Mic, Send, AlertCircle } from "lucide-react";
 
-export default function TextareaPreviewPage() {
+import { Textarea } from "@/udroid/src/components/textarea/Textarea";
+import { Label } from "@/udroid/src/components/label/label";
+import { Separator } from "@/udroid/src/components/separator/separator";
+
+export default function TextareaPreview() {
     const [isDark, setIsDark] = React.useState(false);
 
     React.useEffect(() => {
@@ -22,112 +25,116 @@ export default function TextareaPreviewPage() {
     };
 
     return (
-        <div className="min-h-screen bg-white p-12 text-slate-900 dark:bg-slate-950 dark:text-slate-50 transition-colors duration-300">
+        <div className="min-h-screen bg-background text-foreground transition-colors duration-300 p-8">
+            {/* Theme Toggle */}
+            <div className="absolute right-4 top-4 z-50">
+                <button
+                    onClick={toggleTheme}
+                    className="rounded-full border border-border bg-card p-2.5 text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+                >
+                    {isDark ? <Sun className="size-5" /> : <Moon className="size-5" />}
+                </button>
+            </div>
+
             <div className="mx-auto max-w-4xl space-y-12">
+                <div className="space-y-4 text-center">
+                    <h1 className="text-4xl font-bold tracking-tight">Textarea</h1>
+                    <p className="text-lg text-muted-foreground">
+                        A premium, auto-growing textarea component with various styles and states.
+                    </p>
+                </div>
 
-                {/* Header */}
-                <div className="flex items-start justify-between">
-                    <div className="space-y-2">
-                        <h1 className="text-3xl font-bold tracking-tight">Textarea Core</h1>
-                        <p className="text-lg text-slate-500 dark:text-slate-400">
-                            Standard multi-line input component for forms and data entry.
-                        </p>
+                <Separator />
+
+                {/* 1. Basic Usage */}
+                <section className="space-y-6">
+                    <h2 className="text-2xl font-semibold">Basic Usage</h2>
+                    <div className="grid gap-6 p-6 border rounded-xl bg-card">
+                        <div className="grid w-full gap-2">
+                            <Label htmlFor="message">Bio</Label>
+                            <Textarea placeholder="Type your message here." id="message" />
+                            <p className="text-sm text-muted-foreground">
+                                Your message will be copied to the support team.
+                            </p>
+                        </div>
                     </div>
-                    <button
-                        onClick={toggleTheme}
-                        className="rounded-full border border-slate-200 bg-white p-2.5 text-slate-500 transition-all hover:bg-slate-50 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-400 dark:hover:bg-slate-900 dark:hover:text-white"
-                    >
-                        {isDark ? <Sun className="size-5" /> : <Moon className="size-5" />}
-                    </button>
-                </div>
+                </section>
 
-                <div className="grid gap-12 md:grid-cols-2">
-
-                    {/* VARIANTS */}
-                    <section className="space-y-6">
-                        <h2 className="text-xl font-semibold border-b pb-2">1. Visual Variants</h2>
-
-                        <div className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Default</label>
-                                <Textarea placeholder="Type your message here..." />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Filled</label>
-                                <Textarea variant="filled" placeholder="Enter description..." />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Error State</label>
-                                <Textarea
-                                    variant="error"
-                                    defaultValue="Invalid input content"
-                                />
-                                <p className="text-xs text-red-500 font-medium pt-1">Please provide a valid reason.</p>
+                {/* 2. Variants */}
+                <section className="space-y-6">
+                    <h2 className="text-2xl font-semibold">Variants</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-4 p-6 border rounded-xl bg-card">
+                            <h3 className="font-medium">Default (Outline)</h3>
+                            <div className="grid w-full gap-2">
+                                <Label>Description</Label>
+                                <Textarea placeholder="This is the default outline variant." />
                             </div>
                         </div>
-                    </section>
-
-                    {/* STATES & BEHAVIOR */}
-                    <section className="space-y-6">
-                        <h2 className="text-xl font-semibold border-b pb-2">2. States & Behavior</h2>
-
-                        <div className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Disabled</label>
-                                <Textarea disabled placeholder="This field is disabled" />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Read Only</label>
-                                <Textarea
-                                    readOnly
-                                    defaultValue="This content is read-only. You can select it but not edit it."
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">
-                                    Auto-Grow <span className="text-xs font-normal text-slate-500">(Type to expand)</span>
-                                </label>
-                                <Textarea
-                                    autoGrow
-                                    placeholder="I will grow as you type..."
-                                    className="min-h-[42px]"
-                                />
+                        <div className="space-y-4 p-6 border rounded-xl bg-card">
+                            <h3 className="font-medium">Filled</h3>
+                            <div className="grid w-full gap-2">
+                                <Label>Description</Label>
+                                <Textarea variant="filled" placeholder="This is the filled variant." />
                             </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    {/* COMPOSITION */}
-                    <section className="space-y-6 md:col-span-2">
-                        <h2 className="text-xl font-semibold border-b pb-2">3. Component Composition</h2>
+                {/* 3. Sizes */}
+                <section className="space-y-6">
+                    <h2 className="text-2xl font-semibold">Sizes</h2>
+                    <div className="flex flex-col gap-6 p-6 border rounded-xl bg-card">
+                        <div className="grid w-full gap-2">
+                            <Label>Small (sm)</Label>
+                            <Textarea size="sm" placeholder="Small size textarea" />
+                        </div>
+                        <div className="grid w-full gap-2">
+                            <Label>Medium (md)</Label>
+                            <Textarea size="md" placeholder="Medium size textarea (Default)" />
+                        </div>
+                        <div className="grid w-full gap-2">
+                            <Label>Large (lg)</Label>
+                            <Textarea size="lg" placeholder="Large size textarea" />
+                        </div>
+                    </div>
+                </section>
 
-                        <div className="grid md:grid-cols-2 gap-8">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Form Context</label>
-                                <div className="rounded-lg border border-slate-200 p-6 dark:border-slate-800">
-                                    <div className="space-y-4">
-                                        <div className="space-y-2">
-                                            <label htmlFor="bio" className="text-sm font-medium">Biography</label>
-                                            <Textarea
-                                                id="bio"
-                                                variant="filled"
-                                                placeholder="Tell us about yourself"
-                                                rows={3}
-                                            />
-                                        </div>
-                                        <div className="flex justify-end">
-                                            <Button size="sm">Save Changes</Button>
-                                        </div>
-                                    </div>
-                                </div>
+                {/* 4. States */}
+                <section className="space-y-6">
+                    <h2 className="text-2xl font-semibold">States</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-4 p-6 border rounded-xl bg-card">
+                            <h3 className="font-medium">Disabled</h3>
+                            <Textarea disabled placeholder="This textarea is disabled." />
+                        </div>
+                        <div className="space-y-4 p-6 border rounded-xl bg-card">
+                            <h3 className="font-medium">Error</h3>
+                            <div className="grid w-full gap-2">
+                                <Label className="text-destructive">Error Message</Label>
+                                <Textarea variant="error" placeholder="Invalid input example" defaultValue="Invalid content" />
+                                <p className="text-sm text-destructive font-medium flex items-center gap-1">
+                                    <AlertCircle className="size-4" /> Please enter a valid description.
+                                </p>
                             </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                </div>
+                {/* 5. Features */}
+                <section className="space-y-6">
+                    <h2 className="text-2xl font-semibold">Features</h2>
+                    <div className="grid grid-cols-1 gap-6">
+                        {/* Auto-grow */}
+                        <div className="space-y-4 p-6 border rounded-xl bg-card">
+                            <h3 className="font-medium">Auto-grow</h3>
+                            <p className="text-sm text-muted-foreground">The textarea height adjusts automatically as you type.</p>
+                            <Textarea autoGrow placeholder="Type many lines to see me grow..." />
+                        </div>
+
+
+                    </div>
+                </section>
             </div>
         </div>
     );
