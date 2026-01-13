@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Avatar, AvatarBadge, AvatarGroup } from "@/udroid/src/components/avatar";
+import { Avatar, AvatarBadge, AvatarGroup } from "@/udroid/src/components/Avatar";
 import { User, Image as ImageIcon, Briefcase, Sun, Moon } from "lucide-react";
 
 // ... inside component ...

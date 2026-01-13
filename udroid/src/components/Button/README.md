@@ -11,7 +11,7 @@ npm install @radix-ui/react-slot
 ## Usage
 
 ```tsx
-import { Button } from "@/udroid/src/components/button/button";
+import { Button } from "@/src/components/Button/Button";
 
 export default function ButtonDemo() {
   return (

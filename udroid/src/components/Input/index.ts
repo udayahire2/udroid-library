@@ -1,3 +1,3 @@
-export * from "./input";
-export * from "./input.types";
-export * from "./input.styles";
+export * from "./Input";
+export * from "./Input.types";
+export * from "./Input.styles";

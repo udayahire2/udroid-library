@@ -10,8 +10,8 @@ import {
     CardHeader,
     CardTitle,
 } from "@/udroid/src/components/card/card";
-import { Button } from "@/udroid/src/components/button/button";
-import { Input } from "@/udroid/src/components/input/input";
+import { Button } from "@/udroid/src/components/Button/Button";
+import { Input } from "@/udroid/src/components/Input/Input";
 import { Label } from "@/udroid/src/components/label/label";
 import { Switch } from "@/udroid/src/components/switch/switch";
 

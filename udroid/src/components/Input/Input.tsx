@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { cn } from "../../utils/cn";
-import { InputProps } from "./input.types";
-import { inputVariants } from "./input.styles";
+import { InputProps } from "./Input.types";
+import { inputVariants } from "./Input.styles";
 
 import { Slot } from "@radix-ui/react-slot";
 

@@ -9,7 +9,7 @@ No external dependencies required (uses native `input`).
 ## Usage
 
 ```tsx
-import { Input } from "@/udroid/src/components/input/input";
+import { Input } from "@/udroid/src/components/Input/Input";
 import { Mail } from "lucide-react";
 
 export default function InputDemo() {

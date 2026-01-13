@@ -3,8 +3,8 @@
 import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { cn } from "../../utils/cn";
-import { avatarVariants, avatarImageVariants, avatarFallbackVariants, avatarBadgeVariants, avatarGroupVariants } from "./avatar.styles";
-import { AvatarProps, AvatarBadgeProps, AvatarGroupProps } from "./avatar.types";
+import { avatarVariants, avatarImageVariants, avatarFallbackVariants, avatarBadgeVariants, avatarGroupVariants } from "./Avatar.styles";
+import { AvatarProps, AvatarBadgeProps, AvatarGroupProps } from "./Avatar.types";
 
 /**
  * Avatar Component

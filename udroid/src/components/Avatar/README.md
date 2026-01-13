@@ -15,7 +15,7 @@ import {
   Avatar,
   AvatarGroup,
   AvatarBadge,
-} from "@/udroid/src/components/avatar/avatar";
+} from "@/udroid/src/components/Avatar";
 
 export default function AvatarDemo() {
   return (

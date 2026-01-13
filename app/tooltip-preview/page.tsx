@@ -7,7 +7,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "../../udroid/src/components/tooltip/tooltip";
-import { Button } from "../../udroid/src/components/button/button";
+import { Button } from "@/udroid/src/components/Button/Button";
 import { Sun, Moon } from "lucide-react";
 
 export default function TooltipPreviewPage() {

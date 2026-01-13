@@ -6,7 +6,7 @@ import * as z from "zod";
 import * as React from "react";
 import { Sun, Moon, Check, ChevronsUpDown, Mail, User, Lock, Send, MessagesSquare, Briefcase } from "lucide-react";
 
-import { Button } from "@/udroid/src/components/button/button";
+import { Button } from "@/udroid/src/components/Button/Button";
 import {
     Form,
     FormControl,
@@ -16,7 +16,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/udroid/src/components/form/form";
-import { Input } from "@/udroid/src/components/input/input";
+import { Input } from "@/udroid/src/components/Input/Input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/udroid/src/components/card/card";
 import { Switch } from "@/udroid/src/components/switch/switch";
 import { Textarea } from "@/udroid/src/components/textarea/Textarea";

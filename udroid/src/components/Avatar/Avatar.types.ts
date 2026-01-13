@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { VariantProps } from "../../utils/variants";
-import { avatarVariants, avatarBadgeVariants, avatarGroupVariants } from "./avatar.styles";
+import { avatarVariants, avatarBadgeVariants, avatarGroupVariants } from "./Avatar.styles";
 
 export interface AvatarProps
     extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>,

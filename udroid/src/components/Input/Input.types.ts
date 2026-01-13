@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import { VariantProps } from "class-variance-authority";
-import { inputVariants } from "./input.styles";
+import { inputVariants } from "./Input.styles";
 
 export interface InputProps
     extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,

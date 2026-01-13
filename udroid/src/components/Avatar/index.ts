@@ -1,3 +1,3 @@
-export * from "./avatar";
-export * from "./avatar.types";
-export * from "./avatar.styles";
+export * from "./Avatar";
+export * from "./Avatar.types";
+export * from "./Avatar.styles";

@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 import { VariantProps } from "../../utils/variants";
-import { buttonVariants } from "./button.styles";
+import { buttonVariants } from "./Button.styles";
 
 export interface ButtonProps
     extends ComponentProps<"button">,
