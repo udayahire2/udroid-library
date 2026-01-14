@@ -11,3 +11,4 @@ export * from "./components/Avatar";
 export * from "./components/Card";
 export * from "./components/Form";
 export * from "./components/Label";
+export * from "./components/Checkbox";

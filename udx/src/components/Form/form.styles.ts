@@ -15,10 +15,4 @@ export const formLabelVariants = cva(
 
 export const formDescriptionVariants = cva("text-[0.8rem] text-muted-foreground");
 
-export const formMessageVariants = cva("text-[0.8rem] font-medium text-destructive mt-1.5 flex items-center gap-2", {
-    variants: {
-        error: {
-            true: "animate-in slide-in-from-top-1 fade-in duration-200",
-        }
-    }
-});
+

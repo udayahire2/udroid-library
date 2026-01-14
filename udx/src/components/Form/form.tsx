@@ -12,7 +12,7 @@ import {
     useFormContext,
 } from "react-hook-form";
 import { cn } from "../../utils/cn";
-import { Label } from "../label/label";
+import { Label } from "../Label/label";
 import {
     FormItemContextValue,
     FormFieldContextValue,
@@ -26,8 +26,9 @@ import {
     formItemVariants,
     formLabelVariants,
     formDescriptionVariants,
-    formMessageVariants,
 } from "./form.styles";
+import { motion, AnimatePresence, HTMLMotionProps } from "framer-motion";
+import { AlertCircle } from "lucide-react";
 
 const Form = FormProvider;
 
@@ -75,6 +76,7 @@ const FormItemContext = React.createContext<FormItemContextValue>(
     {} as FormItemContextValue
 );
 
+// Changed to forwardRef with HTMLDivElement but renders a motion.div
 const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
     ({ className, ...props }, ref) => {
         const id = React.useId();
@@ -148,25 +150,37 @@ const FormDescription = React.forwardRef<
 });
 FormDescription.displayName = "FormDescription";
 
-const FormMessage = React.forwardRef<HTMLParagraphElement, FormMessageProps>(
-    ({ className, children, ...props }, ref) => {
-        const { error, formMessageId } = useFormField();
-        const body = error ? String(error?.message) : children;
+// Enhanced FormMessage with AnimatePresence
+const FormMessage = React.forwardRef<
+    HTMLParagraphElement,
+    FormMessageProps
+>(({ className, children, ...props }, ref) => {
+    const { error, formMessageId } = useFormField();
+    const body = error ? String(error?.message) : children;
 
-        if (!body) {
-            return null;
-        }
-
-        return (
-            <p
-                ref={ref}
-                id={formMessageId}
-                className={cn(formMessageVariants(), className)}
-                {...props}
-            />
-        );
-    }
-);
+    return (
+        <AnimatePresence mode="wait">
+            {body && (
+                <motion.p
+                    ref={ref} // framer-motion can handle standard refs, but types might conflict. simplified for now.
+                    id={formMessageId}
+                    initial={{ opacity: 0, y: -5, height: 0 }}
+                    animate={{ opacity: 1, y: 0, height: "auto" }}
+                    exit={{ opacity: 0, y: -5, height: 0 }}
+                    transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                    className={cn(
+                        "text-[0.8rem] font-medium text-destructive flex items-center gap-1.5 overflow-hidden",
+                        className
+                    )}
+                    {...(props as any)}
+                >
+                    <AlertCircle className="size-3.5 shrink-0" />
+                    {body}
+                </motion.p>
+            )}
+        </AnimatePresence>
+    );
+});
 FormMessage.displayName = "FormMessage";
 
 export {

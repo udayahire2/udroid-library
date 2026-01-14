@@ -19,6 +19,7 @@ import {
 import { Input } from "@/udx/src/components/Input/Input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/udx/src/components/Card/card";
 import { Switch } from "@/udx/src/components/Switch/switch";
+import { Checkbox } from "@/udx/src/components/Checkbox/Checkbox";
 import { Textarea } from "@/udx/src/components/Textarea/Textarea";
 import { RadioGroup, RadioGroupItem } from "@/udx/src/components/Radio/radio";
 
@@ -50,9 +51,6 @@ const profileSchema = z.object({
 const contactSchema = z.object({
     name: z.string().min(2, { message: "Name is required" }),
     email: z.string().email({ message: "Invalid email address" }),
-    subject: z.enum(["general", "support", "billing"], {
-        errorMap: () => ({ message: "Please select a subject" }),
-    }),
     message: z.string().min(10, { message: "Message must be at least 10 characters" }),
 });
 
@@ -291,15 +289,15 @@ export default function FormPreview() {
                                         control={registerForm.control}
                                         name="terms"
                                         render={({ field }) => (
-                                            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                                                 <FormControl>
-                                                    <Switch
+                                                    <Checkbox
                                                         checked={field.value}
                                                         onCheckedChange={field.onChange}
                                                     />
                                                 </FormControl>
                                                 <div className="space-y-1 leading-none">
-                                                    <FormLabel>
+                                                    <FormLabel className="cursor-pointer">
                                                         Accept terms and conditions
                                                     </FormLabel>
                                                     <FormDescription>
@@ -353,54 +351,7 @@ export default function FormPreview() {
                                             )}
                                         />
                                     </div>
-                                    <FormField
-                                        control={contactForm.control}
-                                        name="subject"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>I need help with...</FormLabel>
-                                                <FormControl>
-                                                    <RadioGroup
-                                                        onValueChange={field.onChange}
-                                                        defaultValue={field.value}
-                                                        className="grid grid-cols-3 gap-4 h-full"
-                                                    >
-                                                        <FormItem className="space-y-0 h-full">
-                                                            <FormControl>
-                                                                <RadioGroupItem value="general" variant="card" className="flex flex-col items-center justify-center gap-3 p-4 h-full transition-all [&:has([data-state=checked])]:border-primary">
-                                                                    <div className="rounded-full bg-secondary p-2.5 text-secondary-foreground group-data-[state=checked]:bg-primary group-data-[state=checked]:text-primary-foreground transition-colors">
-                                                                        <MessagesSquare className="size-5" />
-                                                                    </div>
-                                                                    <span className="text-sm font-medium">General</span>
-                                                                </RadioGroupItem>
-                                                            </FormControl>
-                                                        </FormItem>
-                                                        <FormItem className="space-y-0 h-full">
-                                                            <FormControl>
-                                                                <RadioGroupItem value="support" variant="card" className="flex flex-col items-center justify-center gap-3 p-4 h-full transition-all [&:has([data-state=checked])]:border-primary">
-                                                                    <div className="rounded-full bg-secondary p-2.5 text-secondary-foreground group-data-[state=checked]:bg-primary group-data-[state=checked]:text-primary-foreground transition-colors">
-                                                                        <User className="size-5" />
-                                                                    </div>
-                                                                    <span className="text-sm font-medium">Support</span>
-                                                                </RadioGroupItem>
-                                                            </FormControl>
-                                                        </FormItem>
-                                                        <FormItem className="space-y-0 h-full">
-                                                            <FormControl>
-                                                                <RadioGroupItem value="billing" variant="card" className="flex flex-col items-center justify-center gap-3 p-4 h-full transition-all [&:has([data-state=checked])]:border-primary">
-                                                                    <div className="rounded-full bg-secondary p-2.5 text-secondary-foreground group-data-[state=checked]:bg-primary group-data-[state=checked]:text-primary-foreground transition-colors">
-                                                                        <Briefcase className="size-5" />
-                                                                    </div>
-                                                                    <span className="text-sm font-medium">Billing</span>
-                                                                </RadioGroupItem>
-                                                            </FormControl>
-                                                        </FormItem>
-                                                    </RadioGroup>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
+
                                     <FormField
                                         control={contactForm.control}
                                         name="message"
