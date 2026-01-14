@@ -116,19 +116,19 @@ export default function AvatarPreviewPage() {
                         <div className="flex flex-col gap-2">
                             <span className="text-xs text-slate-400">Regular Stack</span>
                             <AvatarGroup size="md">
-                                <Avatar src="/images/avatar-man-2.jpg" fallback="M2" />
-                                <Avatar src="/images/avatar-woman.jpg" fallback="WM" />
-                                <Avatar src="/images/avatar-man-1.jpg" fallback="M1" />
+                                <Avatar src="/images/avatar-salman.png" fallback="SK" />
+                                <Avatar src="/images/avatar-ghajini.png" fallback="GK" />
+                                <Avatar src="/images/avatar-cat.png" fallback="CT" />
                             </AvatarGroup>
                         </div>
 
                         <div className="flex flex-col gap-2">
                             <span className="text-xs text-slate-400">With Limit (+2)</span>
                             <AvatarGroup size="lg" limit={3}>
-                                <Avatar src="/images/avatar-man-2.jpg" fallback="M2" />
-                                <Avatar src="/images/avatar-woman.jpg" fallback="WM" />
-                                <Avatar src="/images/avatar-man-1.jpg" fallback="M1" />
-                                <Avatar src="/images/avatar-pixel.jpg" fallback="PX" />
+                                <Avatar src="/images/avatar-salman.png" fallback="SK" />
+                                <Avatar src="/images/avatar-ghajini.png" fallback="GK" />
+                                <Avatar src="/images/avatar-crying.png" fallback="CR" />
+                                <Avatar src="/images/avatar-cat.png" fallback="CT" />
                                 <Avatar fallback="UD" />
                             </AvatarGroup>
                         </div>
@@ -141,10 +141,10 @@ export default function AvatarPreviewPage() {
                         Gallery (Uploaded)
                     </h2>
                     <div className="flex flex-wrap items-center gap-6 rounded-xl border border-dashed border-slate-200 p-8 dark:border-slate-800">
-                        <Avatar src="/images/avatar-man-2.jpg" fallback="M2" size="xl" />
-                        <Avatar src="/images/avatar-woman.jpg" fallback="WM" size="lg" />
-                        <Avatar src="/images/avatar-man-1.jpg" fallback="M1" size="md" />
-                        <Avatar src="/images/avatar-pixel.jpg" fallback="PX" size="sm" />
+                        <Avatar src="/images/avatar-salman.png" fallback="SK" size="xl" />
+                        <Avatar src="/images/avatar-ghajini.png" fallback="GK" size="lg" />
+                        <Avatar src="/images/avatar-crying.png" fallback="CR" size="md" />
+                        <Avatar src="/images/avatar-cat.png" fallback="CT" size="sm" />
                     </div>
                 </section>
 
@@ -211,7 +211,7 @@ export default function AvatarPreviewPage() {
                         <div className="flex items-center gap-4">
                             <Avatar
                                 // Fake slow load by using a heavy image or just relying on network
-                                src="/images/avatar-woman.jpg"
+                                src="/images/avatar-cat.png"
                                 fallback={<span className="animate-pulse">...</span>}
                                 size="lg"
                                 delayMs={0} // Show fallback immediately
