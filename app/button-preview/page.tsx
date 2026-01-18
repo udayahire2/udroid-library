@@ -22,6 +22,22 @@ import {
   Moon
 } from "lucide-react";
 
+function LoadingButtonDemo() {
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  return (
+    <Button
+      isLoading={isLoading}
+      onClick={() => {
+        setIsLoading(true);
+        setTimeout(() => setIsLoading(false), 3000);
+      }}
+    >
+      {isLoading ? "Saving..." : "Click to Save"}
+    </Button>
+  );
+}
+
 export default function ButtonPreviewPage() {
   const [isDark, setIsDark] = React.useState(false);
 
@@ -69,7 +85,7 @@ export default function ButtonPreviewPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="p-12 border rounded-xl bg-card/30 flex items-center justify-center">
-              <Button size="lg" className="w-48 h-14 text-base shadow-xl">
+              <Button size="lg" className="w-48 h-12 text-base shadow-xl">
                 Commit Action
               </Button>
             </div>
@@ -97,23 +113,21 @@ export default function ButtonPreviewPage() {
           </div>
         </section>
 
-        {/* COMPOSITION */}
+        {/* COMPOSITION & NEW API */}
         <section className="space-y-6">
           <div className="flex items-center gap-3 pb-2 border-b border-border">
             <div className="h-6 w-1 bg-primary rounded-full" />
-            <h2 className="text-xl font-semibold">3. Composition & Loading</h2>
+            <h2 className="text-xl font-semibold">3. Composition & Loading API</h2>
           </div>
-          <div className="flex flex-wrap gap-4 p-8 border rounded-xl bg-card/30 justify-center">
-            <Button>
-              <Mail className="mr-2" /> Login
+          <div className="flex flex-wrap gap-4 p-8 border rounded-xl bg-card/30 justify-center items-center">
+            {/* Icon Props */}
+            <Button leftIcon={<Mail />}>Email Login</Button>
+            <Button variant="secondary" rightIcon={<ArrowRight />}>
+              Next Step
             </Button>
-            <Button variant="secondary">
-              Next Step <ArrowRight className="ml-2" />
-            </Button>
-            <Button disabled>
-              <Loader2 className="mr-2 animate-spin" />
-              Processing
-            </Button>
+
+            {/* Interactive Loading Test */}
+            <LoadingButtonDemo />
           </div>
         </section>
 

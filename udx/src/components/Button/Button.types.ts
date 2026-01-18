@@ -6,4 +6,7 @@ export interface ButtonProps
     extends ComponentProps<"button">,
     VariantProps<typeof buttonVariants> {
     asChild?: boolean;
+    isLoading?: boolean;
+    leftIcon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
 }

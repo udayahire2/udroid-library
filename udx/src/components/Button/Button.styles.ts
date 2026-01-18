@@ -2,7 +2,7 @@ import { cva } from "../../utils/variants";
 
 export const buttonVariants = cva(
     // Base: Strictly controlled transitions, mechanical easing, no bounce.
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[transform,box-shadow,background-color,color] duration-200 ease-mechanical focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:transform-none select-none",
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[transform,box-shadow,background-color,color] duration-200 ease-mechanical focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-slate-900 disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-95 motion-reduce:transition-none motion-reduce:active:transform-none select-none",
     {
         variants: {
             variant: {
@@ -18,12 +18,12 @@ export const buttonVariants = cva(
                 link: "text-primary underline-offset-4 hover:underline",
             },
             size: {
-                default: "h-9 px-4 py-2",
-                sm: "h-8 rounded-md px-3 text-xs active:translate-y-[0.5px]", // Less travel for small
-                lg: "h-10 rounded-md px-8 active:translate-y-[1px]",      // More travel for large
+                default: "h-10 px-4 py-2", // Medium (Default): 40px
+                sm: "h-8 rounded-md px-3 text-xs active:translate-y-[0.5px]", // Small: 32px
+                lg: "h-12 rounded-md px-6 text-base active:translate-y-[1px]", // Large: 48px
 
                 // System-Level Icon Sizes (Square Geometry Tuning)
-                // Physics Override: Less scale (0.985 vs 0.98) and less travel (0.5px max) to prevent "wobbly" feel
+                // Physics Override: Less scale (0.985 vs 0.98) and less travel to prevent "wobbly" feel
                 "icon-sm": "h-8 w-8 p-0 [&_svg]:size-4 active:scale-[0.985] active:translate-y-[0.5px]",
                 "icon-md": "h-9 w-9 p-0 [&_svg]:size-4 active:scale-[0.985] active:translate-y-[0.5px]",
                 "icon-lg": "h-10 w-10 p-0 [&_svg]:size-5 active:scale-[0.985] active:translate-y-[0.5px]",

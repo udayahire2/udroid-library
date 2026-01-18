@@ -1,6 +1,6 @@
 {
     "name": "@udayahire2/udx-ui",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Reusable UI library for udx",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
